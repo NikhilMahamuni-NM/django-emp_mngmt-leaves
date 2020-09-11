@@ -34,7 +34,7 @@ Now it’s time to run our web app. Run the following command.
 ```
 $ python manage.py runserver
 ```
-Now go to the browser and enter http://127.0.0.1:8000/ in the url tab.
+Now go to the browser and enter http://127.0.0.1:8000 in the url tab.
 
 Now login in using the username and password entered during creating superuser(admin).
 ![Login Page](/Screenshots/login-page.png)
