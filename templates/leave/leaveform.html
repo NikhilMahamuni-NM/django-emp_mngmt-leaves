@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+    {{ request.user.get_full_name }} | Leave Form
+{% endblock title %}
+
+{% block body_block %}
+    <div class="container-lg">
+        <center><h1>Leave Form</h1></center>
+        <div class="w-50 mx-auto my-3  p-3 border rounded bg-white">
+            <center><h4>Leaves Available: {{ user.profile.leaves_avai | default:0 }}</h4></center>
+            <form class="p-3 border rounded" method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="Name">Name</label>
+                    <input type="text" readonly class="form-control" name = "emp_name" id="Name" value="{{ user.get_full_name }}">
+                </div>
+                <div class="form-group">
+                    <label for="start_date">From</label>
+                    <input type="date" class="form-control" name = "start_date" id="start_date" placeholder="From" name=>
+                </div>
+                <div class="form-group">
+                    <label for="end_date">To</label>
+                    <input type="date" class="form-control" name = "end_date" id="end_date" placeholder="To">
+                </div>
+                <div class="form-group">
+                    <label for="total">No of Days</label>
+                    <input type="text" class="form-control" name = "total" id="total" placeholder="Total Days">
+                </div>
+                <div class="form-group">
+                    <label for="reason">Reason</label>
+                    <textarea class = "form-control"  name = "reason" rows = "5" cols = "6" placeholder = "Reason for Leave"></textarea>
+                </div>
+                <center><button type="submit" class="btn btn-primary">Apply</button></center>
+                
+            </form>
+        </div>
+    </div>
+{% endblock body_block %}

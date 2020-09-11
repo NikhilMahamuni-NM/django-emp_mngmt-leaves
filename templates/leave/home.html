@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    Admin
+{% endblock title %}
+    
+{% block body_block %}
+
+<div class="container-fluid px-5 bg-white" >
+    <br>
+    <center><h1>Admin Dashboard</h1></center>
+    <div class=" m-2">
+        <h1>Overview:</h1>
+        <div class="border border-secondary rounded p-2 overview">
+            
+            <div class="card text-center text-white bg-info" style="width: 15rem;">
+                <div class="card-body">
+                    <h2 class="card-title">Employees</h2>
+                    <hr class="bg-white">
+                    <h3>{{ employees | length }}</h3>
+                    <a href="{% url 'leave:emp-register' %}" class="card-link">Add Employee</a>
+                </div>
+            </div>
+            <div class="card text-center text-white bg-secondary" style="width: 15rem;">
+                <div class="card-body">
+                    <h2 class="card-title">Managers</h2>
+                    <hr class="bg-white">
+                    <h3>{{ managers | length }}</h3>
+                    <a href="{% url 'leave:mngr-register' %}" class="card-link">Add Manager</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div>
+        <h2>Leave Applications ({{ leaves | length }}):</h2>
+        <table class="text-center border table table-hover table-striped">
+            <thead>
+                <tr>
+                    <th>Employee Name</th>
+                    <th>Applied On</th>
+                    <th>Duration</th>
+                    <th>Leaves Available</th>
+                    <th>Status</th>
+                    <th>Approved By</th>
+                    <th>Approval Date</th>
+                    <th>Details</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if leaves %}
+                {% for leave in leaves %}
+                <tr>
+                    <td>{{ leave.full_name }}</td>
+                    <td>{{ leave.applied_on }}</td>
+                    <td><strong>{{ leave.total }} Days</strong> | {{ leave.start_date | date:"d-m-y" }} to {{ leave.end_date | date:"d-m-y" }}</td>
+                    <td>{{ leave.leaves_avai }}</td>
+                    <td>
+                        {% if leave.approval == False %}
+                            Not Approved
+                        {% else %}
+                            Approved
+                        {% endif %}
+                    </td>
+                    <td>{{ leave.approved_by | default:"-" }}</td>
+                    <td>{{ leave.approval_date | default:"-" }}</td>
+                    <td><a href="{% url 'leave:leave_detail' leave.id %}">View Details</a></td>
+                </tr>
+                {% endfor %}
+                {% else %}
+                    <tr>
+                        <td class="border-bottom" colspan="6"><strong>Not Applied for Any Leaves</strong></td>
+                    <tr>
+                {% endif %}
+
+            </tbody>
+        </table>
+
+    </div>
+</div>
+{% endblock body_block %}

@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Leave of | {{ leave.full_name }}
+{% endblock title %}
+
+{% block body_block %}
+    <div>
+        <center><h1>Leave Details</h1></center>
+        <div class="bg-white mx-auto border rounded m-3 p-3" style="width: 30rem;">
+            <p><strong>Name:</strong> {{ leave.full_name }}</p>
+            <p><strong>Start Date:</strong> {{ leave.start_date }}</p>
+            <p><strong>End Date:</strong> {{ leave.end_date }}</p>
+            <p><strong>Total Days:</strong> {{ leave.total }}</p>
+            <p><strong>Reason:</strong> {{ leave.description }}</p>
+            <p><strong>Applied On:</strong> {{ leave.applied_on }}</p>
+            <hr>
+            <form method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    <textarea class = "form-control"  name = "remark" rows = "5" cols = "4" placeholder = "Any Remark">{{ leave.remark}}</textarea>
+                </div>
+                <center>
+                {% if leave.approval == False %}
+                    <button type="submit" class="btn btn-info">Approve</button>
+                    <a class="btn btn-danger" href="{% url 'leave:dismiss' leave.id %}">Dismiss</a>
+                {% else %}
+                    <a href="{% url 'leave:disapprove' leave.id %}" class="btn btn-primary">DisApprove</a>
+                {% endif %}
+                </center> 
+            </form>
+        </div>
+    </div>
+    
+{% endblock body_block %}

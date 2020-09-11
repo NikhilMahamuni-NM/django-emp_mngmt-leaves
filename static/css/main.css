@@ -1,0 +1,22 @@
+.navbar-light .navbar-brand {
+    color: white;
+}
+
+.overview {
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+}
+
+.overview a {
+    color: white;
+}
+
+.overview a:hover {
+    text-decoration: underline;
+}
+
+.white {
+    background-color: rgb(247, 247, 247);
+}
+

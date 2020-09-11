@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+    Add Employee
+{% endblock title %}
+
+{% block body_block %}
+
+    <div class="rbox mx-auto border border-dark rounded bg-white my-3 py-2 px-5" style="width:35rem">
+        <center>
+            <h3>Add Employee</h3>
+        </center>
+        <form class="register" action="" method="POST">
+            {% csrf_token %}
+            {{ form | crispy }}
+            <center><input type="Submit" value="Add Employee" class="btn btn-info my-3"></center>
+        </form>
+    </div>
+        
+    
+{% endblock body_block %}

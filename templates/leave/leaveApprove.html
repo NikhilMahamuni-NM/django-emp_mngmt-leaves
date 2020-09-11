@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Leave Applications
+{% endblock title %}
+
+{% block body_block %}
+<div class="container-fluid px-5 bg-white" style="min-height: 91vh;">
+    <br>
+    <h1>Leave Approvals({{ leaves | length }}) :</h1>
+    <br>
+    <table class="table table-hover table-striped text-center border">
+        <thead>
+            <tr>
+                <th>Employee Name</th>
+                <th>Applied On</th>
+                <th>Duration</th>
+                <th>Leaves Available</th>
+                <th>Reason</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if leaves %}
+            {% for leave in leaves %}
+            <tr>
+                <td>{{ leave.full_name }}</td>
+                <td>{{ leave.applied_on }}</td>
+                <td><strong>{{ leave.total }} Days</strong> | {{ leave.start_date | date:"d-m-y" }} to {{ leave.end_date | date:"d-m-y" }}</td>
+                <td>{{ leave.leaves_avai }}</td>
+                <td>{{ leave.description | truncatechars:9 }}</td>
+                <td>
+                    {% if leave.approval == False %}
+                        Not Approved
+                    {% else %}
+                        Approved
+                    {% endif %}
+                </td>
+                <td>
+                    {% if leave.approval == False %}
+                        {% if leave.approved_by %}
+                            Dismissed
+                        {% else %}
+                            <a class="disabled" href="{% url 'leave:leave_detail' leave.id %}">Take Action</a>
+                        {% endif %}
+                    {% else %}
+                            Done
+                    {% endif %}                
+                </td>
+            </tr>
+            {% endfor %}
+            {% else %}
+                <tr>
+                    <td class="border-bottom" colspan="6"><strong>Leave Applications Not Found</strong></td>
+                <tr>
+            {% endif %}
+        </tbody>
+    </table>
+
+</div>
+{% endblock body_block %}
